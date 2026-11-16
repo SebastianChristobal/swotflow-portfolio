@@ -8,7 +8,7 @@ SWOTFlow är en webbaserad produkt för företag som vill förstå sin digitala 
 
 ## Produktcase
 
-Jag utvecklar SWOTFlow från produktidé och användarflöden till frontend, backend, datamodell och externa integrationer. Arbetet omfattar även analysregler, åtkomstkontroll, pilotbegränsningar och en publik visningsdemo som kan provas utan konto.
+Jag utvecklar Swotflow från produktidé och användarflöden till frontend, backend, datamodell och externa integrationer. Arbetet omfattar även analysregler, åtkomstkontroll, pilotbegränsningar och en publik visningsdemo som kan provas utan konto.
 
 Den öppna demon följer ett fiktivt kafferosteri och två konkurrenter under en gemensam 90-dagarsperiod. Företag, inlägg, kommentarer och mätvärden är påhittade. Den visar produktens användarresa utan att exponera privata arbetsytor eller starta betalda analyser.
 
