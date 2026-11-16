@@ -2,6 +2,10 @@
 
 [Till presentationen](README.md)
 
+## Produktkommunikation som analysområde
+
+SWOTFlow är ett B2B-verktyg. Analysen avser hur företag kommunicerar produkter till potentiella köpare i tillgängligt innehåll, särskilt i sociala medier. Publikrespons är observerbara reaktioner och tillgängliga kommentarer, inte verifierad köpintention, kundidentifiering eller försäljningsutfall.
+
 ## Från rådata till jämförbart underlag
 
 Apify-adaptrar och webbplatsbearbetning normaliserar tillgängligt underlag. Applikationen sparar bland annat källreferenser, mättid och uppgifter om vilka mätvärden som faktiskt finns. Ett saknat värde är inte ett uppmätt nollvärde.

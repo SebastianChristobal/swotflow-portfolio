@@ -2,7 +2,7 @@
 
 **Sebastian Pavez · Fullstackutveckling · AI · Dataanalys · Produktutveckling**
 
-SWOTFlow är en webbaserad produkt för företag som vill förstå sin digitala kommunikation i förhållande till konkurrenternas. Lösningen samlar företagsprofil, innehåll, mätvärden och observationer som underlag för jämförelser och SWOT-arbete.
+SWOTFlow är ett B2B-verktyg som hjälper företag att analysera hur de och deras konkurrenter kommunicerar sina produkter till potentiella köpare, med fokus på sociala medier. Lösningen samlar företagsprofil, innehåll, mätvärden och observationer som underlag för jämförelser och SWOT-arbete.
 
 [Besök webbplatsen](https://swotflow.com/) · [Utforska den öppna demon](https://swotflow.com/demo) · [Arkitektur](ARKITEKTUR.md) · [Teknik och designval](TEKNIK.md) · [Status och avgränsning](STATUS.md)
 
@@ -15,6 +15,10 @@ Den öppna demon följer ett fiktivt kafferosteri och två konkurrenter under en
 ![SWOTFlows dashboard med företagsprofil och tydlig demomärkning](bilder/dashboard.jpg)
 
 *Dashboarden för Björk & Böna sammanför företagsprofil och en ingång till analysens observationer. Bilden kommer från den publika demon.*
+
+## Vad analysen kan och inte kan visa
+
+SWOTFlow analyserar tillgänglig produktkommunikation: innehåll, budskap, teman och observerbar publikrespons. Det kan ge underlag för att jämföra hur företag presenterar sina produkter för potentiella köpare. Verktyget identifierar inte vilka mottagare som faktiskt vill köpa eller blir kunder och visar inte hur kommunikationen påverkar försäljningen. Potentiella köpare beskriver kommunikationens målgrupp, inte verifierad köpintention hos enskilda personer.
 
 ## Från innehåll till beslutsunderlag
 
