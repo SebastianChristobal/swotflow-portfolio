@@ -4,4 +4,4 @@ Copyright 2026 Sebastian Pavez. Alla rättigheter förbehålls till egen text oc
 
 Detta repo publiceras för visning och professionell presentation. Ingen separat licens för återanvändning, ändring eller distribution lämnas här. Kontakta upphovspersonen för sådana frågor.
 
-Produkt- och leverantörsnamn tillhör respektive rättighetsinnehavare. Presentationen innebär inte att leverantörerna rekommenderar eller står bakom SWOTFlow.
+Produkt- och leverantörsnamn tillhör respektive rättighetsinnehavare. Presentationen innebär inte att leverantörerna rekommenderar eller står bakom SwotFlow.

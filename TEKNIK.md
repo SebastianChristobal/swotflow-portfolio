@@ -4,7 +4,7 @@
 
 ## Produktkommunikation som analysområde
 
-SWOTFlow är ett B2B-verktyg. Analysen avser hur företag kommunicerar produkter till potentiella köpare i tillgängligt innehåll, särskilt i sociala medier. Publikrespons är observerbara reaktioner och tillgängliga kommentarer, inte verifierad köpintention, kundidentifiering eller försäljningsutfall.
+SwotFlow är ett B2B-verktyg. Analysen avser hur företag kommunicerar produkter till potentiella köpare i tillgängligt innehåll, särskilt i sociala medier. Publikrespons är observerbara reaktioner och tillgängliga kommentarer, inte verifierad köpintention, kundidentifiering eller försäljningsutfall.
 
 ## Från rådata till jämförbart underlag
 
@@ -38,4 +38,14 @@ Förberedda resultat kan läsas utan att varje sidvisning startar ett nytt AI-an
 
 Projektet har Node-baserade tester för bland annat demo-isolering, fiktiva data, åtkomst, abonnemangsregler, statistik, källunderlag, språk och insamlingslogik. Typkontroll, ESLint och produktionsbygge ingår i det dokumenterade utvecklingsflödet.
 
-Portföljgranskningen har läst testfiler och kod men har inte kört hela testsamlingen, startat appen lokalt eller verifierat verkliga leverantörs- och databasskrivningar. Den publika demon har granskats i webbläsare.
+Under projektutvecklingen har verkliga insamlings- och AI-anrop genomförts, privata inloggningar testats och resultat sparats i databasen. Den 12 november passerade 182 automatiska tester vid den senast dokumenterade fullständiga körningen. Den 17 november kontrollerades aggregerad körningsstatus och förekomsten av sparade resultat. Ingen ny insamling, AI-körning eller fullständig regression gjordes för denna dokumentationsuppdatering.
+
+## Visuell identitet
+
+Den befintliga logotypen kombinerar en vatteninspirerad symbol med ordmärket SwotFlow i **Neuropol Regular**. Typografin ger namnet en teknisk identitet, medan vattenformen knyter an till flödet av information genom produkten. Neuropol används i ordmärket; gränssnittets löptext har en separat typografi för läsbarhet.
+
+Färgvalen utgår från solens gula, himlens blå och månens grå: gult används som accent, blått i navigation och text, och ljusa grå toner i bakgrunder och kort. Arbetet omfattar också responsiv hero, mobilnavigation och konsekvent utformning av demo och arbetsytor.
+
+![SwotFlow med vattenikon och Neuropol-ordmärke](bilder/swotflow-logo.png)
+
+Bilden är en statisk export av appens befintliga symbol och ordmärke. Den lokala fontdokumentationen anger Neuropol Regular av Ray Larabie/Typodermic som CC0; fontfilen distribueras inte i presentationsrepot.

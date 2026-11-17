@@ -1,63 +1,60 @@
-# SWOTFlows arkitektur
+# Så fungerar SwotFlow
 
 [Till presentationen](README.md)
 
-Beskrivningen bygger på den lokalt granskade applikationskoden och den publika demon den 16 november 2026. Den skiljer mellan öppet demoinnehåll och privata pilotfunktioner.
+SwotFlow består av ett webbgränssnitt, en serverdel, en databas och externa tjänster för insamling och AI. Här beskrivs hur delarna samarbetar. Beskrivningen bygger på granskad kod och projektets pilottester, uppdaterat den 17 november 2026.
 
-## Applikationens delar
+## Två sätt att använda produkten
 
-```mermaid
+**Den publika demon** visar ett fiktivt kafferosteri och dess konkurrenter. Besökaren kan utforska vyer, filter och exempel utan konto. Demon läser inte privata företagsdata och startar inga betalda leverantörsanrop.
+
+**Den privata piloten** kräver inloggning. Användaren tillhör en arbetsyta för sitt företag. Där finns företagets profil, konkurrenter, sparat innehåll och analysresultat. Servern kontrollerar vilka uppgifter användaren får läsa och vilka operationer rollen tillåter.
+
+## Från källor till analys
+
+1. **Företaget anger sin profil och sina konkurrenter.** Uppgifterna ger sammanhang åt analysen och skiljs från externa observationer.
+2. **Tillgängligt innehåll samlas in när insamling är tillåten.** Apify används för sociala medier. Webbplatsunderlag bearbetas också. Åtkomstbegränsningar kan göra att en källa bara ger delar av innehållet eller inget alls.
+3. **Underlaget ordnas och sparas.** Inlägg, källänkar, tillgängliga mätvärden och tidpunkter lagras i MongoDB via Prisma, som är kopplingen mellan serverkoden och databasen. Saknade värden skiljs från uppmätta nollvärden.
+4. **AI bearbetar ett avgränsat urval.** Servern skickar utvalt underlag till OpenAI. I innehållsjämförelsen används samma kanal, period och temakategorier för båda företagen. Sidvisning startar inte automatiskt ett nytt modellanrop.
+5. **Svaret kontrolleras innan det används.** Käll-ID:n och citat kontrolleras mot underlaget. Obestyrkta valfria uppgifter blir okända. Inlägg som modellen utelämnar finns kvar som oklassificerade. Felaktiga käll-ID:n avvisas. Antal och andelar räknas i applikationskoden.
+6. **Användaren utforskar sparade resultat.** Gränssnittet visar innehåll, statistik, konkurrentobservationer och SWOT-underlag med källor och begränsningar.
+
+Insamling och AI är separata operationer. Piloten har genomfört insamling och analys med verkliga data, men ny insamling är nu pausad i den granskade koden. Tillåtna AI-flöden kan fortfarande använda sparat underlag.
+
+## Delarna i en bild
+
+~~~mermaid
 flowchart TD
-    V["Publik besökare"] --> DEMO["Next.js Publik webbplats och visningsdemo"]
-    F["Fiktivt och deterministiskt scenario"] --> DEMO
-    U["Pilotanvändare"] --> AUTH["Auth.js Credentials och JWT-session"]
-    AUTH --> ACCESS["Aktuell användare, arbetsyteroll och åtkomstregler"]
-    ACCESS --> APP["Next.js App Router och API-rutter"]
-    APP --> DATA["Datalager och analysregler"]
-    DATA --> DB[("MongoDB via Prisma")]
-    DATA --> UI["React Gränssnitt, filter och Recharts"]
-    APP --> GUARD["Separata kontroller för insamling och AI"]
-    GUARD --> RUN["Behörig och avgränsad insamlingsbegäran"]
-    RUN --> SOURCE["Apify och tillgängligt webbplatsunderlag"]
-    SOURCE --> NORMAL["Normalisering, källor och mättid"]
-    NORMAL --> DB
-    GUARD --> AI["Avgränsad AI-begäran med sparat underlag"]
-    DB --> AI
-    AI --> OPENAI["OpenAI Strukturerat resultat"]
-    OPENAI --> VALID["Schema-, käll- och citatvalidering"]
-    VALID --> DB
-```
+    D["Besökare utan konto"] --> DEMO["Publik demo med fiktiva data"]
+    U["Pilotanvändare"] --> AUTH["Inloggning och kontroll av behörighet"]
+    AUTH --> APP["Serverdel i Next.js"]
+    APP <--> DB[("Databas: MongoDB via Prisma")]
+    APP --> UI["Gränssnitt: React, formulär och diagram"]
+    APP --> C["Separat kontroll för insamling"]
+    C --> S["Apify och webbplatsunderlag"]
+    S --> N["Ordna underlag, källor och tidpunkter"]
+    N --> DB
+    APP --> A["Separat kontroll för AI"]
+    DB --> A
+    A --> AI["OpenAI bearbetar valt underlag"]
+    AI --> V["Kontrollera svaret och räkna jämförelser"]
+    V --> DB
+~~~
 
-Diagrammet visar kodens ansvarsfördelning. Det betyder inte att alla flöden är aktiverade i den publika miljön. Visningsdemon använder sitt fiktiva scenario utan privata databasläsningar eller betalda leverantörsanrop.
+Pilarna visar hur lösningen är uppbyggd, inte att alla funktioner är öppna eller aktiva samtidigt.
 
-## Frontend och backend
+## Vem får se vad?
 
-Next.js App Router kombinerar serverkomponenter för dataläsning med klientkomponenter för filter, formulär och diagram. API-rutter och serverns datalager ansvarar för privata operationer och skrivningar. TypeScript och Zod används för datatyper och validering.
+Auth.js hanterar inloggningen. Lösenord lagras som hashvärden med bcrypt och sessionen använder JWT. Servern kontrollerar aktuell användare, arbetsytemedlemskap och roll innan privata operationer tillåts.
 
-## Identitet och arbetsytor
+En företagsägare och plattformens administratör har olika ansvar. Företagets uppgifter och resultat hör till arbetsytan. Ett generellt gränssnitt för att växla mellan flera företag är inte färdigbyggt.
 
-Användare kopplas till arbetsytor genom medlemskap och roller. Företagsprofil, konkurrenter och rapporter knyts till arbetsytan. Plattformens administrativa roll skiljs från en företagsägares roll i sin arbetsyta.
+## Varför sparas data och resultat?
 
-Inloggning använder Credentials, lösenordshashning med bcrypt och JWT-session. Privat åtkomst kontrolleras mot aktuell användare i databasen. Koden har inte ett färdigt generellt gränssnitt för att växla mellan flera bolag.
+Sparade underlag gör att användaren kan återvända till analysen utan en ny insamling vid varje besök. Historik skiljer publiceringsdatum från tidpunkten då ett mätvärde hämtades. Sparade rapporter är tänkta som ögonblicksbilder av underlaget; funktionernas faktiska verifieringsläge beskrivs i [STATUS.md](STATUS.md).
 
-## Datamodell
+## Drift och begränsningar
 
-| Modellområde | Ansvar |
-|---|---|
-| Identitet och medlemskap | Användare, roller och koppling till arbetsyta |
-| Företagsprofil och konkurrenter | Eget företags uppgifter, självrapporterad kontext och jämförelseföretag |
-| Sparade källor och historik | Inlägg, tillgängliga mätvärden, källänkar och tidpunkter |
-| Körningar och resultat | Insamlingsstatus, reservering, gränser och sparad analys |
-| Rapporter | Sparade ögonblicksbilder med arbetsytebaserad åtkomst |
+Next.js samlar gränssnitt och serverdel i samma applikation. Vercel används för publicering, med produktion och separat test/preview. Miljöerna kan ha olika åtkomst och aktiverade funktioner. Kostnadskontroll, bekräftelse och skydd mot dubbla körningar ligger före externa anrop.
 
-Prismas datakälla är MongoDB. Andra databasrelaterade paket i beroendelistan innebär inte att den granskade produktmodellen använder PostgreSQL.
-
-## Insamling och AI är separata operationer
-
-Normal insamling är pausad i den granskade lokala koden. Begränsade engångsflöden finns separat med körningsposter och behörighetskontroller. AI har en egen pausflagga och använder sparat underlag i flera analysvägar. Aktiverad AI får därför inte automatiskt aktivera insamling.
-
-Kostnads- och körningsgränser behöver gälla innan ett externt anrop startas. Osäkra eller avbrutna leverantörsanrop ska inte behandlas som kostnadsfria försök som kan upprepas utan kontroll.
-
-## Publicering och miljöer
-
-Koden innehåller Vercel-specifik styrning av produktion och preview samt avgränsad läsåtkomst i en testmiljö. Produktion, lokal kod och preview ska inte förutsättas ha identisk funktion eller åtkomst. Ingen ny publicering eller miljöändring har gjorts för denna portfölj.
+Testmiljön har ett begränsat undantag för innehållsanalys av sparade data i en utvald pilotarbetsyta. Det innebär inte att alla skrivningar är tillåtna. Stripe-kod finns, men betalningar är avstängda.

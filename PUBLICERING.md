@@ -1,6 +1,6 @@
 # Avgränsning för publicering
 
-Detta presentationsrepo innehåller en sammanfattning av SWOTFlow, teknisk arkitektur och tre skärmbilder från den publika demon.
+Detta presentationsrepo innehåller en sammanfattning av SwotFlow, teknisk arkitektur och tre skärmbilder från den publika demon samt en export av den befintliga logotypen.
 
 Inga filer har kopierats från den privata applikationens databas, miljöinställningar, kontolistor, kundunderlag, körjournaler eller säkerhetskopior. Den privata koden har lästs för att verifiera tekniska påståenden men distribueras inte här.
 
@@ -19,3 +19,9 @@ Att en leverantör eller tjänst finns som paketberoende betyder inte att integr
 Inga kundreferenser, faktiska effektvinster eller generella säkerhetscertifieringar påstås. Ingen insamling, AI-generering, betalning, inbjudan eller publicering har utförts för att skapa portföljmaterialet.
 
 Se [rättigheter](RATTIGHETER.md).
+
+## Genomförda pilottester
+
+Att inga leverantörsanrop startades för att skapa portfoliomaterialet betyder inte att projektet enbart har använt demodata. SwotFlow har tidigare samlat in verkligt innehåll och genomfört analyskörningar i den privata piloten. Dokumentationen beskriver detta utan att publicera kontouppgifter, privata källtexter eller kundreferenser. Uppdateringen den 17 november använde enbart aggregerad databasstatus.
+
+Logotypbilden använder appens befintliga vattenikon och Neuropol-ordmärke. Fontfilen och den privata applikationskoden ingår inte.
